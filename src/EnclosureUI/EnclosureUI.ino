@@ -68,8 +68,10 @@ void drawSensorGrid() {
 
 void drawColumnsWithContext() {
 
- //TODO: Pass this in as a param
- char* columnTitles[] = {"Volts", "Amps", "Temp", "Humidity"};
+  lcd.setFont(BigFont);
+  
+ /* TODO: Pass this in as a param */
+ char* columnTitles[] = {"Volts", "Amps", "Temp", "H"};
  int columnTitlesLength = sizeof(columnTitles) / sizeof(char *);
  int columnWidth = getMaxWidth()/columnTitlesLength;
  int yPos = getHeaderYInset() + getBorderWidth();
@@ -94,7 +96,6 @@ void drawContainer() {
 
   /* Set container style */
   lcd.setColor(VGA_RED);
-  lcd.setFont(SmallFont); // <-- Pick a bigger font!
 
   /* Draw header */
   lcd.fillRect(0, getHeaderYInset(), getMaxWidth() - 1, getHeaderYInset() + getBorderWidth());
