@@ -55,6 +55,11 @@ int getHeaderYInset() {
   return 60;
 }
 
+int getStrLengthInPixels(char *str) {
+
+  return ((getFontWidth() * strlen(str))/2);
+}
+
 void drawSensorGrid() {
   
   drawContainer();
@@ -63,7 +68,8 @@ void drawSensorGrid() {
 
 void drawColumnsWithContext() {
 
- char* columnTitles[] = {"V", "A", "T", "H"}; // Pass this in!
+ //TODO: Pass this in as a param
+ char* columnTitles[] = {"Volts", "Amps", "Temp", "Humidity"};
  int columnTitlesLength = sizeof(columnTitles) / sizeof(char *);
  int columnWidth = getMaxWidth()/columnTitlesLength;
  int yPos = getHeaderYInset() + getBorderWidth();
@@ -72,8 +78,14 @@ void drawColumnsWithContext() {
  /* Draw Columns */
   for (int i = 0; i < columnTitlesLength; i++) {
     lcd.fillRect(columnWidth * i, yPos, columnWidth * i + getBorderWidth(), getMaxHeight());
+    
+    int strLengthInPixels = getStrLengthInPixels(columnTitles[i]);
+    int columnCenter = columnWidth/2;
+    int columnXStart = columnWidth * i;
+    int borderCenter = getBorderWidth()/2;
+
     /* Calculate column width for context X coordinate */
-    int xPos = ((columnWidth * i) + columnWidth/2) - (getFontWidth()/2);
+    int xPos = columnXStart + columnCenter + borderCenter - getStrLengthInPixels(columnTitles[i]);
     lcd.print(columnTitles[i], xPos, yPos + titleYInset);
   }
 }
